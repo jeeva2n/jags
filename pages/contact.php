@@ -103,11 +103,25 @@ include __DIR__ . '/../includes/header.php';
                 <div style="display: flex; flex-direction: column; gap: 24px;">
                     <div>
                         <span style="font-size: 0.7rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--color-text-muted); display: block; margin-bottom: 6px;">Location</span>
-                        <span style="font-size: var(--fs-base); color: var(--color-text);">Chennai, Tamil Nadu, India</span>
+                        <span style="font-size: var(--fs-base); color: var(--color-text);">F-16, 2nd Cross Main Rd, Ambattur Industrial Estate, Chennai, Tamil Nadu 600058</span>
                     </div>
                     <div>
-                        <span style="font-size: 0.7rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--color-text-muted); display: block; margin-bottom: 6px;">NDT Equipment</span>
-                        <span style="font-size: var(--fs-base); color: var(--color-text);">Eddy Current, PAUT, TOFD, MPI, PT</span>
+                        <span style="font-size: 0.7rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--color-text-muted); display: block; margin-bottom: 6px;">Phone</span>
+                        <span style="font-size: var(--fs-base); color: var(--color-text);">
+                            <a href="tel:+919444376041" style="color: inherit; text-decoration: none;">+91 94443 76041</a>
+                        </span>
+                    </div>
+                    <div>
+                        <span style="font-size: 0.7rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--color-text-muted); display: block; margin-bottom: 6px;">Email</span>
+                        <span style="font-size: var(--fs-base); color: var(--color-text);">
+                            <a href="mailto:info@jags.com" style="color: inherit; text-decoration: none;">info@jags.com</a>
+                        </span>
+                    </div>
+                    <div>
+                        <span style="font-size: 0.7rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--color-text-muted); display: block; margin-bottom: 6px;">Website</span>
+                        <span style="font-size: var(--fs-base); color: var(--color-text);">
+                            <a href="https://jags.com" target="_blank" rel="noopener" style="color: inherit; text-decoration: none;">jags.com</a>
+                        </span>
                     </div>
                     <div>
                         <span style="font-size: 0.7rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--color-text-muted); display: block; margin-bottom: 6px;">Automation</span>
@@ -133,37 +147,37 @@ include __DIR__ . '/../includes/header.php';
 </section>
 
 <script>
-document.getElementById('contactForm').addEventListener('submit', function(e) {
-    e.preventDefault();
-    const form = this;
-    const btn = document.getElementById('contactSubmit');
-    const msg = document.getElementById('contactMessage');
-    const formData = new FormData(form);
+    document.getElementById('contactForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const form = this;
+        const btn = document.getElementById('contactSubmit');
+        const msg = document.getElementById('contactMessage');
+        const formData = new FormData(form);
 
-    btn.textContent = 'Sending...';
-    btn.disabled = true;
+        btn.textContent = 'Sending...';
+        btn.disabled = true;
 
-    fetch('<?= BASE_URL ?>/api/contact.php', {
-        method: 'POST',
-        body: formData
-    })
-    .then(r => r.json())
-    .then(data => {
-        if (data.success) {
-            msg.innerHTML = '<div class="form-success">Thank you! Your enquiry has been received. We will get back to you shortly.</div>';
-            form.reset();
-        } else {
-            msg.innerHTML = '<div class="form-error">' + (data.message || 'Something went wrong.') + '</div>';
-        }
-    })
-    .catch(() => {
-        msg.innerHTML = '<div class="form-error">Network error. Please try again.</div>';
-    })
-    .finally(() => {
-        btn.textContent = 'REQUEST A QUOTE';
-        btn.disabled = false;
+        fetch('<?= BASE_URL ?>/api/contact.php', {
+                method: 'POST',
+                body: formData
+            })
+            .then(r => r.json())
+            .then(data => {
+                if (data.success) {
+                    msg.innerHTML = '<div class="form-success">Thank you! Your enquiry has been received. We will get back to you shortly.</div>';
+                    form.reset();
+                } else {
+                    msg.innerHTML = '<div class="form-error">' + (data.message || 'Something went wrong.') + '</div>';
+                }
+            })
+            .catch(() => {
+                msg.innerHTML = '<div class="form-error">Network error. Please try again.</div>';
+            })
+            .finally(() => {
+                btn.textContent = 'REQUEST A QUOTE';
+                btn.disabled = false;
+            });
     });
-});
 </script>
 
 <?php include __DIR__ . '/../includes/footer.php'; ?>

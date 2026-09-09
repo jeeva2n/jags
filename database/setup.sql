@@ -131,7 +131,7 @@ INSERT INTO industries (name, slug, description, solutions, sort_order) VALUES
 INSERT INTO site_settings (setting_key, setting_value) VALUES
 ('company_name', 'JAGS Technologies'),
 ('tagline', 'Engineering Precision. Inspection Excellence.'),
-('address', 'Chennai, Tamil Nadu, India'),
+('address', 'F-16, 2nd Cross Main Rd, Ambattur Industrial Estate, Chennai, Tamil Nadu 600058'),
 ('phone', ''),
 ('email', ''),
 ('meta_description', 'JAGS Technologies - Advanced NDT Equipment & Industrial Automation Solutions');

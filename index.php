@@ -56,10 +56,26 @@ $industries = getIndustries();
         </div>
 
         <div class="hero-image-wrapper">
-            <img src="https://picsum.photos/seed/hero/800/600" alt="Engineering Precision Inspection" id="heroImage" style="width: 100%; height: 100%; object-fit: cover;">
+            <div class="hero-slider" id="heroSlider">
+                <div class="hero-slide active">
+                    <img src="<?= BASE_URL ?>/assets/images/hero/maganatic%20particle.webp" alt="Magnetic Particle Inspection">
+                </div>
+                <div class="hero-slide">
+                    <img src="<?= BASE_URL ?>/assets/images/hero/ndt-test.webp" alt="NDT Testing">
+                </div>
+                <div class="hero-slide">
+                    <img src="<?= BASE_URL ?>/assets/images/hero/Nondestructive-testing-equipment-768x644.webp" alt="NDT Equipment">
+                </div>
+                <div class="hero-slide">
+                    <img src="<?= BASE_URL ?>/assets/images/hero/ultrasonic-probe-steel-pipe-inspection.webp" alt="Ultrasonic Pipe Inspection">
+                </div>
+                <div class="hero-slider-scan" id="heroSliderScan"></div>
+                <div class="tech-overlay"></div>
+            </div>
         </div>
     </div>
 </section>
+
 
 <!-- ====== WHO WE ARE ====== -->
 <section class="section">
@@ -67,39 +83,61 @@ $industries = getIndustries();
         <div class="split-section">
             <div>
                 <span class="section-label">Who We Are</span>
-                <h2 class="section-title">ENGINEERING TECHNOLOGY<br>FOR RELIABLE INSPECTION</h2>
+
+                <h2 class="section-title">
+                    RELIABLE NDT<br>
+                    TECHNOLOGY FOR<br>
+                    QUALITY & SAFETY
+                </h2>
+
                 <p class="section-desc" style="margin-bottom: 40px;">
-                    JAGS Technologies is an engineering and technology company focused on
-                    NDT equipment sales, inspection systems, industrial automation and
-                    customized engineering solutions.
+                    JAGS TECHNOLOGIES is a reliable NDT equipment supplier
+                    providing quality NDT instruments, accessories and
+                    inspection solutions for manufacturing industries.
+                    With fast service and technical expertise, we help
+                    customers achieve accurate, safe and reliable inspection results.
                 </p>
 
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+
                     <div class="value-card" style="padding: 28px;">
                         <div class="value-number" style="font-size: 1.5rem; margin-bottom: 8px;">01</div>
                         <h3 class="value-title" style="font-size: 1rem;">NDT Equipment</h3>
-                        <p class="value-desc" style="font-size: 0.8rem;">Complete range of NDT instruments, probes and accessories.</p>
+                        <p class="value-desc" style="font-size: 0.8rem;">
+                            Quality NDT equipment and instruments for accurate and reliable inspection.
+                        </p>
                     </div>
+
                     <div class="value-card" style="padding: 28px;">
                         <div class="value-number" style="font-size: 1.5rem; margin-bottom: 8px;">02</div>
-                        <h3 class="value-title" style="font-size: 1rem;">Integration</h3>
-                        <p class="value-desc" style="font-size: 0.8rem;">System integration with PLC, HMI and production lines.</p>
+                        <h3 class="value-title" style="font-size: 1rem;">Inspection Services</h3>
+                        <p class="value-desc" style="font-size: 0.8rem;">
+                            Professional NDT inspection services focused on quality and safety.
+                        </p>
                     </div>
+
                     <div class="value-card" style="padding: 28px;">
                         <div class="value-number" style="font-size: 1.5rem; margin-bottom: 8px;">03</div>
-                        <h3 class="value-title" style="font-size: 1rem;">Commissioning</h3>
-                        <p class="value-desc" style="font-size: 0.8rem;">On-site installation, commissioning and performance validation.</p>
+                        <h3 class="value-title" style="font-size: 1rem;">Technical Expertise</h3>
+                        <p class="value-desc" style="font-size: 0.8rem;">
+                            Technical knowledge to help you choose the right NDT solution for your application.
+                        </p>
                     </div>
+
                     <div class="value-card" style="padding: 28px;">
                         <div class="value-number" style="font-size: 1.5rem; margin-bottom: 8px;">04</div>
-                        <h3 class="value-title" style="font-size: 1rem;">Training & Support</h3>
-                        <p class="value-desc" style="font-size: 0.8rem;">Operator training, after-sales service and spares support.</p>
+                        <h3 class="value-title" style="font-size: 1rem;">Fast Service & Support</h3>
+                        <p class="value-desc" style="font-size: 0.8rem;">
+                            Responsive service and dependable support to keep your inspection work moving.
+                        </p>
                     </div>
+
                 </div>
             </div>
 
-            <div class="split-image img-reveal has-scan">
-                <img src="https://picsum.photos/seed/who-we-are/800/600" alt="Who We Are - JAGS Technologies" style="width: 100%; height: 100%; object-fit: cover; border-radius: 12px;">
+            <div class="who-we-are-visual has-scan">
+                <img src="<?= BASE_URL ?>/assets/images/hero/who%20we%20are.webp"
+                     alt="JAGS Technologies NDT Equipment and Inspection Solutions">
                 <div class="scan-line"></div>
             </div>
         </div>

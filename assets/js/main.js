@@ -5,6 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initParallax();
     initMagneticButtons();
     initScanLines();
+    initHeroSlider();
     initPageTransitions();
     initFormInteractions();
 });
@@ -128,6 +129,33 @@ function initScanLines() {
     }, { threshold: 0.3 });
 
     scanContainers.forEach(el => observer.observe(el));
+}
+
+function initHeroSlider() {
+    const slider = document.getElementById('heroSlider');
+    if (!slider) return;
+
+    const slides = slider.querySelectorAll('.hero-slide');
+    if (slides.length < 2) return;
+
+    const scan = document.getElementById('heroSliderScan');
+    let current = 0;
+    const INTERVAL = 2590;
+
+    function goTo(next) {
+        slides[current].classList.remove('active');
+        slides[next].classList.add('active');
+
+        if (scan) {
+            scan.classList.remove('active');
+            void scan.offsetWidth;
+            scan.classList.add('active');
+        }
+
+        current = next;
+    }
+
+    setInterval(() => goTo((current + 1) % slides.length), INTERVAL);
 }
 
 function initPageTransitions() {

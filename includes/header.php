@@ -27,7 +27,7 @@
 <header class="site-header" id="siteHeader">
     <div class="header-inner">
         <a href="<?= BASE_URL ?>/" class="logo">
-            <span class="logo-mark">J</span>
+            <img src="<?= BASE_URL ?>/assets/images/jags.png" alt="JAGS Technologies Logo" class="logo-img">
             <span class="logo-text">JAGS<span class="logo-accent"> TECHNOLOGIES</span></span>
         </a>
 

@@ -4,7 +4,7 @@
             <div class="footer-grid">
                 <div class="footer-brand">
                     <a href="<?= BASE_URL ?>/" class="footer-logo">
-                        <span class="logo-mark">J</span>
+                        <img src="<?= BASE_URL ?>/assets/images/jags.png" alt="JAGS Technologies Logo" class="logo-img">
                         <span class="logo-text">JAGS<span class="logo-accent">TECH</span></span>
                     </a>
                     <p class="footer-tagline">ADVANCED NDT EQUIPMENT<br>& INDUSTRIAL AUTOMATION</p>
@@ -47,10 +47,28 @@
                 <div class="footer-col">
                     <h4 class="footer-heading">Contact</h4>
                     <ul class="footer-links footer-contact">
+
+                        <li>
+                            <span class="footer-contact-label">Contact</span>
+                            +91 94443 76041
+                        </li>
+
                         <li>
                             <span class="footer-contact-label">Location</span>
-                            Chennai, Tamil Nadu, India
+                            F-16, 2nd Cross Main Rd, Ambattur Industrial Estate, Chennai, Tamil Nadu 600058
                         </li>
+
+                        <li>
+                            <span class="footer-contact-label">Website</span>
+                            <a href="https://jags.com" target="_blank">jags.com</a>
+                        </li>
+
+                        <li>
+                            <span class="footer-contact-label">Mail</span>
+                            <a href="mailto:info@jags.com">info@jags.com</a>
+                        </li>
+
+
                     </ul>
                     <a href="<?= BASE_URL ?>/pages/contact.php" class="btn-footer-cta magnetic-btn" data-cursor="OPEN">REQUEST A QUOTE</a>
                 </div>
@@ -77,4 +95,5 @@
 <script src="<?= BASE_URL ?>/assets/js/main.js"></script>
 <script src="<?= BASE_URL ?>/assets/js/timeline.js"></script>
 </body>
+
 </html>
