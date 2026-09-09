@@ -97,7 +97,7 @@ $industries = getIndustries();
                     With fast service and technical expertise, we help
                     customers achieve accurate, safe and reliable inspection results.
                 </p>
-
+    
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
 
                     <div class="value-card" style="padding: 28px;">
@@ -690,7 +690,8 @@ $industries = getIndustries();
                     </div>
                     <div class="form-group">
                         <label for="q-file">Upload Specification / Drawing</label>
-                        <input type="file" id="q-file" name="specification_file" class="form-control" accept=".pdf,.doc,.docx,.jpg,.png" style="padding: 10px;">
+                        <input type="file" id="q-file" name="specification_file" class="form-control" accept=".pdf,.doc,.docx,.xls,.xlsx,.zip,.jpg,.jpeg,.png,.dwg,.dxf,.step" style="padding: 10px;">
+                        <div style="font-size: 0.72rem; color: var(--color-text-muted); margin-top: 6px;">Max 25 MB — PDF, Word, Excel, ZIP, images or CAD files</div>
                     </div>
                     <div id="formMessage"></div>
                     <button type="submit" class="btn btn-primary magnetic-btn" style="width: 100%; justify-content: center;" id="submitBtn">
@@ -733,10 +734,16 @@ $industries = getIndustries();
         const msg = document.getElementById('formMessage');
         const formData = new FormData(form);
 
+        const fileInput = document.getElementById('q-file');
+        if (fileInput && fileInput.files.length && fileInput.files[0].size > 25 * 1024 * 1024) {
+            msg.innerHTML = '<div class="form-error">Attachment is too large. Maximum file size is 25 MB.</div>';
+            return;
+        }
+
         btn.textContent = 'Sending...';
         btn.disabled = true;
 
-        fetch('<?= BASE_URL ?>/api/contact.php', {
+        fetch('api/contact.php', {
                 method: 'POST',
                 body: formData
             })
@@ -749,7 +756,8 @@ $industries = getIndustries();
                     msg.innerHTML = '<div class="form-error">' + (data.message || 'Something went wrong. Please try again.') + '</div>';
                 }
             })
-            .catch(() => {
+            .catch(err => {
+                console.error('JAGS quote fetch error:', err);
                 msg.innerHTML = '<div class="form-error">Network error. Please try again.</div>';
             })
             .finally(() => {

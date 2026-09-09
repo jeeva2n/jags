@@ -87,7 +87,8 @@ include __DIR__ . '/../includes/header.php';
                     </div>
                     <div class="form-group">
                         <label for="c-file">Upload Specification / Drawing</label>
-                        <input type="file" id="c-file" name="specification_file" class="form-control" accept=".pdf,.doc,.docx,.jpg,.png" style="padding: 10px;">
+                        <input type="file" id="c-file" name="specification_file" class="form-control" accept=".pdf,.doc,.docx,.xls,.xlsx,.zip,.jpg,.jpeg,.png,.dwg,.dxf,.step" style="padding: 10px;">
+                        <div style="font-size: 0.72rem; color: var(--color-text-muted); margin-top: 6px;">Max 25 MB — PDF, Word, Excel, ZIP, images or CAD files</div>
                     </div>
                     <div id="contactMessage"></div>
                     <button type="submit" class="btn btn-primary magnetic-btn" style="width: 100%; justify-content: center;" id="contactSubmit">
@@ -103,24 +104,24 @@ include __DIR__ . '/../includes/header.php';
                 <div style="display: flex; flex-direction: column; gap: 24px;">
                     <div>
                         <span style="font-size: 0.7rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--color-text-muted); display: block; margin-bottom: 6px;">Location</span>
-                        <span style="font-size: var(--fs-base); color: var(--color-text);">F-16, 2nd Cross Main Rd, Ambattur Industrial Estate, Chennai, Tamil Nadu 600058</span>
+                        <span style="font-size: var(--fs-base); color: var(--color-text);"><?= e(getSetting('address', 'F-16, 2nd Cross Main Rd, Ambattur Industrial Estate, Chennai, Tamil Nadu 600058')) ?></span>
                     </div>
                     <div>
                         <span style="font-size: 0.7rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--color-text-muted); display: block; margin-bottom: 6px;">Phone</span>
                         <span style="font-size: var(--fs-base); color: var(--color-text);">
-                            <a href="tel:+919444376041" style="color: inherit; text-decoration: none;">+91 94443 76041</a>
+                            <a href="tel:<?= e(preg_replace('/[^0-9+]/', '', getSetting('phone', '+91 94443 76041'))) ?>" style="color: inherit; text-decoration: none;"><?= e(getSetting('phone', '+91 94443 76041')) ?></a>
                         </span>
                     </div>
                     <div>
                         <span style="font-size: 0.7rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--color-text-muted); display: block; margin-bottom: 6px;">Email</span>
                         <span style="font-size: var(--fs-base); color: var(--color-text);">
-                            <a href="mailto:info@jags.com" style="color: inherit; text-decoration: none;">info@jags.com</a>
+                            <a href="mailto:<?= e(getSetting('email', 'info@jags.com')) ?>" style="color: inherit; text-decoration: none;"><?= e(getSetting('email', 'info@jags.com')) ?></a>
                         </span>
                     </div>
                     <div>
                         <span style="font-size: 0.7rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--color-text-muted); display: block; margin-bottom: 6px;">Website</span>
                         <span style="font-size: var(--fs-base); color: var(--color-text);">
-                            <a href="https://jags.com" target="_blank" rel="noopener" style="color: inherit; text-decoration: none;">jags.com</a>
+                            <a href="<?= e(getSetting('website', 'https://jags.com')) ?>" target="_blank" rel="noopener" style="color: inherit; text-decoration: none;"><?= e(str_replace(['https://', 'http://', 'www.'], '', getSetting('website', 'https://jags.com'))) ?></a>
                         </span>
                     </div>
                     <div>
@@ -146,6 +147,28 @@ include __DIR__ . '/../includes/header.php';
     </div>
 </section>
 
+<!-- ====== LOCATION MAP ====== -->
+<section class="section map-section">
+    <div class="container">
+        <div class="section-header" style="text-align: center; margin-bottom: 0;">
+            <span class="section-label">Location</span>
+            <h2 class="section-title">WHERE TO FIND US</h2>
+            <p class="section-desc" style="max-width: 560px; margin: 0 auto;">
+                <?= e(getSetting('address', 'F-16, 2nd Cross Main Rd, Ambattur Industrial Estate, Chennai, Tamil Nadu 600058')) ?>
+            </p>
+        </div>
+    </div>
+    <div class="map-wrapper" style="width: 100%; max-width: none; height: 550px; position: relative; overflow: hidden; margin-top: 56px;">
+        <iframe
+            src="https://www.google.com/maps?q=<?= urlencode(getSetting('address', 'F-16, 2nd Cross Main Rd, Ambattur Industrial Estate, Chennai, Tamil Nadu 600058')) ?>&z=15&hl=en&output=embed"
+            style="display: block; position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0;"
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            allowfullscreen
+            title="JAGS Technologies Location Map"></iframe>
+    </div>
+</section>
+
 <script>
     document.getElementById('contactForm').addEventListener('submit', function(e) {
         e.preventDefault();
@@ -154,10 +177,16 @@ include __DIR__ . '/../includes/header.php';
         const msg = document.getElementById('contactMessage');
         const formData = new FormData(form);
 
+        const fileInput = document.getElementById('c-file');
+        if (fileInput && fileInput.files.length && fileInput.files[0].size > 25 * 1024 * 1024) {
+            msg.innerHTML = '<div class="form-error">Attachment is too large. Maximum file size is 25 MB.</div>';
+            return;
+        }
+
         btn.textContent = 'Sending...';
         btn.disabled = true;
 
-        fetch('<?= BASE_URL ?>/api/contact.php', {
+        fetch('../api/contact.php', {
                 method: 'POST',
                 body: formData
             })
@@ -170,7 +199,8 @@ include __DIR__ . '/../includes/header.php';
                     msg.innerHTML = '<div class="form-error">' + (data.message || 'Something went wrong.') + '</div>';
                 }
             })
-            .catch(() => {
+            .catch(err => {
+                console.error('JAGS quote fetch error:', err);
                 msg.innerHTML = '<div class="form-error">Network error. Please try again.</div>';
             })
             .finally(() => {

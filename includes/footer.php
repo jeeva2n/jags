@@ -50,22 +50,22 @@
 
                         <li>
                             <span class="footer-contact-label">Contact</span>
-                            +91 94443 76041
+                            <?= e(getSetting('phone', '+91 94443 76041')) ?>
                         </li>
 
                         <li>
                             <span class="footer-contact-label">Location</span>
-                            F-16, 2nd Cross Main Rd, Ambattur Industrial Estate, Chennai, Tamil Nadu 600058
+                            <?= e(getSetting('address', 'F-16, 2nd Cross Main Rd, Ambattur Industrial Estate, Chennai, Tamil Nadu 600058')) ?>
                         </li>
 
                         <li>
                             <span class="footer-contact-label">Website</span>
-                            <a href="https://jags.com" target="_blank">jags.com</a>
+                            <a href="<?= e(getSetting('website', 'https://jags.com')) ?>" target="_blank"><?= e(str_replace(['https://', 'http://', 'www.'], '', getSetting('website', 'https://jags.com'))) ?></a>
                         </li>
 
                         <li>
                             <span class="footer-contact-label">Mail</span>
-                            <a href="mailto:info@jags.com">info@jags.com</a>
+                            <a href="mailto:<?= e(getSetting('email', 'info@jags.com')) ?>"><?= e(getSetting('email', 'info@jags.com')) ?></a>
                         </li>
 
 

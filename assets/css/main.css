@@ -1816,3 +1816,46 @@ select.form-control {
     }
 }
 
+/* ============================================================
+   CONTACT PAGE - full-width location map
+   ============================================================ */
+.map-section {
+    padding: 120px 0 0;
+}
+
+.map-section {
+    padding: 120px 0 0;
+}
+
+.map-wrapper {
+    width: 100%;
+    max-width: none;
+    height: 550px;
+    position: relative;
+    overflow: hidden;
+    margin-top: 56px;
+}
+
+.map-wrapper iframe {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100% !important;
+    height: 100% !important;
+    border: 0;
+    filter: saturate(0.9);
+}
+
+@media (max-width: 768px) {
+    .map-wrapper {
+        height: 400px !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .map-wrapper {
+        height: 300px !important;
+    }
+}
+

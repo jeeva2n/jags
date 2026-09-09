@@ -132,6 +132,7 @@ INSERT INTO site_settings (setting_key, setting_value) VALUES
 ('company_name', 'JAGS Technologies'),
 ('tagline', 'Engineering Precision. Inspection Excellence.'),
 ('address', 'F-16, 2nd Cross Main Rd, Ambattur Industrial Estate, Chennai, Tamil Nadu 600058'),
-('phone', ''),
-('email', ''),
+('phone', '+91 94443 76041'),
+('email', 'info@jags.com'),
+('website', 'https://jags.com'),
 ('meta_description', 'JAGS Technologies - Advanced NDT Equipment & Industrial Automation Solutions');
