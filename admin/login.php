@@ -28,6 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow, noarchive">
 <title>Admin Login — JAGS Technologies</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
 <style>
@@ -67,7 +68,7 @@ button:hover { background: #2476c0; }
     </form>
 
     <?php if (credentials_are_default()): ?>
-        <div class="note">Default login: <strong>admin</strong> / <strong>admin123</strong><br>Change it from <strong>Settings</strong> after signing in.</div>
+        <div class="note">A default administrator password is still active. Sign in once and change it immediately from <strong>Settings</strong> — you will not be able to use the panel until you do.</div>
     <?php endif; ?>
 
     <a class="back" href="<?= BASE_URL ?>/">← Back to website</a>

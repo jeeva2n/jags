@@ -4,12 +4,25 @@ require_auth();
 
 $db = getDB();
 $stats = [
-    'products'   => $db->query("SELECT COUNT(*) FROM products")->fetchColumn(),
-    'categories' => $db->query("SELECT COUNT(*) FROM categories")->fetchColumn(),
-    'industries' => $db->query("SELECT COUNT(*) FROM industries")->fetchColumn(),
-    'projects'   => $db->query("SELECT COUNT(*) FROM projects")->fetchColumn(),
-    'timeline'   => $db->query("SELECT COUNT(*) FROM timeline_stages")->fetchColumn(),
-    'enquiries'  => $db->query("SELECT COUNT(*) FROM quote_requests")->fetchColumn(),
+    'products'        => $db->query("SELECT COUNT(*) FROM products")->fetchColumn(),
+    'categories'      => $db->query("SELECT COUNT(*) FROM categories")->fetchColumn(),
+    'industries'      => $db->query("SELECT COUNT(*) FROM industries")->fetchColumn(),
+    'projects'        => $db->query("SELECT COUNT(*) FROM projects")->fetchColumn(),
+    'timeline'        => $db->query("SELECT COUNT(*) FROM timeline_stages")->fetchColumn(),
+    'used-items'      => $db->query("SELECT COUNT(*) FROM used_equipment_items")->fetchColumn(),
+    'used-categories' => $db->query("SELECT COUNT(*) FROM used_equipment_categories")->fetchColumn(),
+    'enquiries'       => $db->query("SELECT COUNT(*) FROM quote_requests")->fetchColumn(),
+];
+
+$statLabels = [
+    'products'        => 'Products',
+    'categories'      => 'Categories',
+    'industries'      => 'Industries',
+    'projects'        => 'Projects',
+    'timeline'        => 'Workflow Stages',
+    'used-items'      => 'Used Equipment',
+    'used-categories' => 'Used Categories',
+    'enquiries'       => 'Enquiries',
 ];
 
 $recent = $db->query("SELECT * FROM quote_requests ORDER BY created_at DESC LIMIT 8")->fetchAll();
@@ -24,8 +37,8 @@ admin_header('Dashboard', 'dashboard');
     <?php foreach ($stats as $label => $count): ?>
     <div class="card">
         <div class="n"><?= (int)$count ?></div>
-        <h3><?= ucfirst($label) ?></h3>
-        <p><?= in_array($label, ['products', 'categories', 'industries', 'projects', 'timeline', 'enquiries']) ? 'Manage from the menu above.' : '' ?></p>
+        <h3><?= e($statLabels[$label] ?? ucfirst($label)) ?></h3>
+        <p>Manage from the menu above.</p>
     </div>
     <?php endforeach; ?>
 </div>

@@ -1,6 +1,8 @@
 <?php
 require_once __DIR__ . '/../includes/config.php';
 $pageTitle = 'Contact';
+$metaDesc = 'Contact JAGS Technologies in Ambattur Industrial Estate, Chennai for NDT equipment, inspection systems and automation — request a quote or discuss your requirement.';
+$prefillEquipment = trim($_GET['equipment'] ?? '');
 include __DIR__ . '/../includes/header.php';
 ?>
 
@@ -83,7 +85,11 @@ include __DIR__ . '/../includes/header.php';
                     </div>
                     <div class="form-group">
                         <label for="c-msg">Message *</label>
-                        <textarea id="c-msg" name="message" class="form-control" rows="6" placeholder="Describe your inspection requirement..." required></textarea>
+                        <textarea id="c-msg" name="message" class="form-control" rows="6" placeholder="Describe your inspection requirement..." required><?= $prefillEquipment !== '' ? 'I am interested in the used equipment: ' . e($prefillEquipment) : '' ?></textarea>
+                    </div>
+                    <div style="position: absolute; left: -9999px; top: auto; width: 1px; height: 1px; overflow: hidden;" aria-hidden="true">
+                        <label for="c-website">Company Website</label>
+                        <input type="text" id="c-website" name="company_website" tabindex="-1" autocomplete="off">
                     </div>
                     <div class="form-group">
                         <label for="c-file">Upload Specification / Drawing</label>

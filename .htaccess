@@ -1,0 +1,54 @@
+# Security hardening: no directory listings anywhere in this project.
+Options -Indexes
+
+# Used Equipment clean URLs
+<IfModule mod_rewrite.c>
+RewriteEngine On
+
+# Never serve repository metadata even if it exists in the webroot.
+RewriteRule (^|/)\.git(?:/|$) - [F,L]
+
+# The DB schema file lives under database/ for development only; never serve it.
+RewriteRule ^database/ - [F,L]
+
+# Used equipment product detail: /used-equipment/<slug>
+RewriteRule ^used-equipment/([a-z0-9\-]+)/?$ pages/used-equipment-detail.php?slug=$1 [L,QSA]
+
+# Used equipment listing: /used-equipment
+RewriteRule ^used-equipment/?$ pages/used-equipment.php [L,QSA]
+
+# robots.txt and sitemap.xml generated dynamically from the configured BASE_URL
+RewriteRule ^robots\.txt$ robots.php [L]
+RewriteRule ^sitemap\.xml$ sitemap.php [L]
+</IfModule>
+
+# Branded 404 page.
+# NOTE: if the site is deployed at the domain root, change /n/404.php to /404.php
+ErrorDocument 404 /n/404.php
+
+# ---- Caching / compression (static assets) ----
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/html text/css text/javascript application/javascript application/json image/svg+xml application/xml font/ttf font/otf font/woff font/woff2
+</IfModule>
+
+<IfModule mod_expires.c>
+    ExpiresActive On
+    ExpiresByType image/png "access plus 30 days"
+    ExpiresByType image/jpeg "access plus 30 days"
+    ExpiresByType image/gif "access plus 30 days"
+    ExpiresByType image/webp "access plus 30 days"
+    ExpiresByType image/svg+xml "access plus 30 days"
+    ExpiresByType font/ttf "access plus 1 year"
+    ExpiresByType font/otf "access plus 1 year"
+    ExpiresByType font/woff "access plus 1 year"
+    ExpiresByType font/woff2 "access plus 1 year"
+    ExpiresByType text/css "access plus 7 days"
+    ExpiresByType text/javascript "access plus 7 days"
+    ExpiresByType application/javascript "access plus 7 days"
+</IfModule>
+
+<IfModule mod_headers.c>
+    <FilesMatch "\.(css|js|png|jpe?g|gif|webp|svg|woff2?|ttf|otf)$">
+        Header set Cache-Control "public, max-age=2592000"
+    </FilesMatch>
+</IfModule>

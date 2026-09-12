@@ -87,6 +87,23 @@
     .form-row {
         grid-template-columns: 1fr;
     }
+
+    .grid-four {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .ue-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .ue-list-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .ue-detail-columns {
+        grid-template-columns: 1fr;
+        gap: 48px;
+    }
 }
 
 /* Mobile */
@@ -97,7 +114,7 @@
         --fs-4xl: 2.2rem;
         --fs-2xl: 1.6rem;
         --fs-xl: 1.3rem;
-        --header-h: 64px;
+        --header-h: 120px;
     }
 
     .container,
@@ -107,6 +124,15 @@
 
     .header-inner {
         padding: 0 20px;
+    }
+
+    .logo-img {
+        width: 104px;
+        height: 104px;
+    }
+
+    .logo-text {
+        font-size: 1.5rem;
     }
 
     .section {
@@ -198,6 +224,35 @@
         grid-template-columns: 1fr;
     }
 
+    .ue-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+
+    .ue-list-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+
+    .ue-item-actions,
+    .ue-detail-actions {
+        flex-direction: column;
+    }
+
+    .ue-item-actions .btn,
+    .ue-detail-actions .btn {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .ue-info-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .ue-detail-columns {
+        padding-top: 0;
+    }
+
     .project-card {
         grid-template-columns: 1fr;
     }
@@ -224,6 +279,22 @@
     .split-list li {
         padding-left: 16px;
     }
+
+    .grid-two,
+    .grid-three,
+    .grid-four {
+        grid-template-columns: 1fr;
+    }
+
+    .timeline-wrapper {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+    }
+
+    .timeline-wrapper::-webkit-scrollbar {
+        display: none;
+    }
 }
 
 /* Very small */
@@ -231,6 +302,15 @@
     :root {
         --fs-hero: 2rem;
         --fs-3xl: 1.5rem;
+    }
+
+    .logo-img {
+        width: 84px;
+        height: 84px;
+    }
+
+    .logo-text {
+        font-size: 1.35rem;
     }
 
     .hero-actions {
@@ -245,6 +325,10 @@
     .cta-actions {
         flex-direction: column;
         align-items: center;
+    }
+
+    .tech-cards-grid {
+        grid-template-columns: 1fr;
     }
 }
 

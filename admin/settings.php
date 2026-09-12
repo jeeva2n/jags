@@ -37,12 +37,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['change_password'])) {
     } else {
         $current = (string)($_POST['current_password'] ?? '');
         $newPass = (string)($_POST['new_password'] ?? '');
+        $confirm = (string)($_POST['new_password_confirm'] ?? '');
         if (!password_verify($current, (string)getSetting('admin_password_hash'))) {
             set_flash('Current password is incorrect.');
-        } elseif (strlen($newPass) < 6) {
-            set_flash('New password must be at least 6 characters.');
+        } elseif (strlen($newPass) < 8) {
+            set_flash('New password must be at least 8 characters.');
         } elseif ($newPass === $current) {
             set_flash('New password must be different from the current one.');
+        } elseif ($newPass !== $confirm) {
+            set_flash('New password confirmation does not match.');
         } else {
             $db->prepare("UPDATE site_settings SET setting_value = ? WHERE setting_key = 'admin_password_hash'")
                ->execute([password_hash($newPass, PASSWORD_DEFAULT)]);
@@ -55,6 +58,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['change_password'])) {
 
 admin_header('Settings', 'settings');
 ?>
+<?php if (isset($_GET['force'])): ?>
+<div class="flash">Security: you are still using the default administrator password. Set a new password below before continuing.</div>
+<?php endif; ?>
 <h1>Site Settings</h1>
 <p class="page-sub">Contact details shown on the website and footer.</p>
 
@@ -110,12 +116,16 @@ admin_header('Settings', 'settings');
                 <input type="password" name="current_password" required>
             </div>
             <div>
-                <label>New Password (min 6 chars)</label>
+                <label>New Password (min 8 chars)</label>
                 <input type="password" name="new_password" required>
             </div>
         </div>
+        <div style="max-width: 50%;">
+            <label>Confirm New Password</label>
+            <input type="password" name="new_password_confirm" required>
+        </div>
         <?php if (credentials_are_default()): ?>
-            <div class="hint">You are still using the default password <strong>admin123</strong> — change it to secure the admin panel.</div>
+            <div class="hint">You are still using the default administrator password — change it to secure the admin panel.</div>
         <?php endif; ?>
     </div>
     <div class="actions-row">

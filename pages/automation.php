@@ -1,7 +1,13 @@
 <?php
 require_once __DIR__ . '/../includes/config.php';
 $pageTitle = 'Automation';
+$metaDesc = 'JAGS Technologies builds industrial automation — feeding and handling, automated inspection machines, robotics and vision, PLC/HMI control and data traceability.';
 $automationCategories = getCategories('automation');
+
+$automationImages = [];
+foreach ($automationCategories as $c) {
+    $automationImages[$c['slug']] = $c['image'];
+}
 include __DIR__ . '/../includes/header.php';
 ?>
 
@@ -48,7 +54,7 @@ include __DIR__ . '/../includes/header.php';
                 </ul>
             </div>
             <div class="split-image img-reveal">
-                <img src="https://picsum.photos/seed/auto-feeding/800/600" alt="Feeding & Handling">
+                <img src="<?= image_uri($automationImages['feeding-handling'] ?? '', placeholder_img()) ?>" alt="Feeding & Handling" loading="lazy" decoding="async">
             </div>
         </div>
     </div>
@@ -58,7 +64,7 @@ include __DIR__ . '/../includes/header.php';
     <div class="container">
         <div class="split-section">
             <div class="split-image img-reveal">
-                <img src="https://picsum.photos/seed/auto-inspection-machines/800/600" alt="Inspection Machines">
+                <img src="<?= image_uri($automationImages['inspection-machines'] ?? '', placeholder_img()) ?>" alt="Inspection Machines" loading="lazy" decoding="async">
             </div>
             <div class="split-content">
                 <span class="split-number">INSPECTION MACHINES</span>
@@ -88,7 +94,7 @@ include __DIR__ . '/../includes/header.php';
                 </ul>
             </div>
             <div class="split-image img-reveal" style="direction: ltr;">
-                <img src="https://picsum.photos/seed/auto-robotics/800/600" alt="Robotics & Vision">
+                <img src="<?= image_uri($automationImages['robotics-vision'] ?? '', placeholder_img()) ?>" alt="Robotics & Vision" loading="lazy" decoding="async">
             </div>
         </div>
     </div>
@@ -110,7 +116,7 @@ include __DIR__ . '/../includes/header.php';
                 </ul>
             </div>
             <div class="split-image img-reveal">
-                <img src="https://picsum.photos/seed/auto-plc-hmi/800/600" alt="PLC / HMI Controls">
+                <img src="<?= image_uri($automationImages['plc-hmi'] ?? '', placeholder_img()) ?>" alt="PLC / HMI Controls" loading="lazy" decoding="async">
             </div>
         </div>
     </div>

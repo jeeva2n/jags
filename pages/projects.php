@@ -1,6 +1,7 @@
 <?php
 require_once __DIR__ . '/../includes/config.php';
 $pageTitle = 'Projects';
+$metaDesc = 'Explore inspection projects engineered by JAGS Technologies — automated inspection cells, eddy current testing, corrosion mapping and automated ultrasonic systems.';
 include __DIR__ . '/../includes/header.php';
 ?>
 
@@ -28,9 +29,9 @@ include __DIR__ . '/../includes/header.php';
             <div class="project-card">
                 <div class="project-card-image">
                     <?php if ($proj['image']): ?>
-                    <img src="<?= BASE_URL ?>/<?= e($proj['image']) ?>" alt="<?= e($proj['title']) ?>">
+                    <img src="<?= BASE_URL ?>/<?= e($proj['image']) ?>" alt="<?= e($proj['title']) ?>" loading="lazy" decoding="async">
                     <?php else: ?>
-                    <img src="https://picsum.photos/seed/project-<?= e(urlencode($proj['title'])) ?>/600/600" alt="<?= e($proj['title']) ?>">
+                    <img src="<?= placeholder_img() ?>" alt="<?= e($proj['title']) ?>" loading="lazy" decoding="async">
                     <?php endif; ?>
                 </div>
                 <div class="project-card-body">

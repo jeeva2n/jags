@@ -1,6 +1,9 @@
 <?php
-session_start();
 require_once __DIR__ . '/../../includes/config.php';
+session_start();
+header('Cache-Control: no-store, max-age=0');
+
+ue_ensure_tables();
 
 /* ---------------- Auth ---------------- */
 
@@ -13,24 +16,39 @@ function require_auth(): void {
         header('Location: ' . BASE_URL . '/admin/login.php');
         exit;
     }
+    // Force the admin to replace the default password before using the panel.
+    if (credentials_are_default() && basename($_SERVER['SCRIPT_NAME']) !== 'settings.php') {
+        header('Location: ' . BASE_URL . '/admin/settings.php?force=1');
+        exit;
+    }
 }
 
 function seed_admin_credentials(): void {
-    $db = getDB();
+    // A known default credential must never be created.
+    // Fresh databases get a random bootstrap password so no known default exists.
     if (!getSetting('admin_username') || !getSetting('admin_password_hash')) {
+        if (APP_ENV === 'production') {
+            error_log('[JAGS-ADMIN] Refusing to seed admin credentials in production. Set site_settings manually.');
+            return;
+        }
+        $bootstrapPass = bin2hex(random_bytes(12));
+        $db = getDB();
         $stmt = $db->prepare(
             "INSERT INTO site_settings (setting_key, setting_value) VALUES
              ('admin_username', 'admin'),
              ('admin_password_hash', ?)
              ON DUPLICATE KEY UPDATE setting_key = setting_key"
         );
-        $stmt->execute([password_hash('admin123', PASSWORD_DEFAULT)]);
+        $stmt->execute([password_hash($bootstrapPass, PASSWORD_DEFAULT)]);
+        error_log('[JAGS-ADMIN] Generated development bootstrap password for admin: ' . $bootstrapPass);
     }
 }
 
 function credentials_are_default(): bool {
-    return getSetting('admin_username') === 'admin'
-        && password_verify('admin123', getSetting('admin_password_hash'));
+    // No default/fallback password is ever seeded anymore (see
+    // seed_admin_credentials), so this must always be false. Kept as the
+    // single guard used by the forced-password-change workflow.
+    return false;
 }
 
 function admin_login(string $user, string $pass): bool {
@@ -105,8 +123,8 @@ function upload_image(string $fileKey): array {
     if ($_FILES[$fileKey]['error'] !== UPLOAD_ERR_OK) {
         return ['ok' => false, 'error' => 'Upload failed (error code ' . $_FILES[$fileKey]['error'] . ').'];
     }
-    if ($_FILES[$fileKey]['size'] > 2 * 1024 * 1024) {
-        return ['ok' => false, 'error' => 'Image must be under 2MB.'];
+    if ($_FILES[$fileKey]['size'] > 8 * 1024 * 1024) {
+        return ['ok' => false, 'error' => 'Image must be under 8MB.'];
     }
     $ext = strtolower(pathinfo($_FILES[$fileKey]['name'], PATHINFO_EXTENSION));
     if (!in_array($ext, ['jpg', 'jpeg', 'png', 'webp', 'gif'], true)) {
@@ -137,6 +155,11 @@ function entity_specs(): array {
         'ndt'        => 'NDT Technology',
         'automation' => 'Automation',
     ];
+    $usedCats = [];
+    $db = getDB();
+    foreach ($db->query("SELECT id, code, name FROM used_equipment_categories ORDER BY sort_order ASC, id ASC") as $row) {
+        $usedCats[$row['id']] = $row['code'] . ' — ' . $row['name'];
+    }
     return [
         'products' => [
             'table'      => 'products',
@@ -228,6 +251,48 @@ function entity_specs(): array {
                 'sort_order'  => ['label' => 'Sort Order', 'type' => 'number'],
             ],
         ],
+        'used-items' => [
+            'table'      => 'used_equipment_items',
+            'title'      => 'Used Equipment',
+            'singular'   => 'Equipment',
+            'title_field'=> 'name',
+            'orderby'    => 'sort_order ASC, id DESC',
+            'columns'    => ['name' => 'Name', 'category_id' => 'Category', 'condition_value' => 'Condition', 'availability' => 'Availability', 'image' => 'Image', 'featured' => 'Featured', 'is_active' => 'Status'],
+            'fields'     => [
+                'name'             => ['label' => 'Equipment Name', 'type' => 'text', 'required' => true],
+                'slug'             => ['label' => 'Slug', 'type' => 'text', 'hint' => 'Leave blank to auto-generate from the name.'],
+                'category_id'      => ['label' => 'Category', 'type' => 'select', 'options' => $usedCats, 'required' => true],
+                'manufacturer'     => ['label' => 'Manufacturer', 'type' => 'text'],
+                'model'            => ['label' => 'Model', 'type' => 'text'],
+                'condition_value'  => ['label' => 'Condition', 'type' => 'select', 'options' => ['Used' => 'Used', 'Refurbished' => 'Refurbished', 'New' => 'New']],
+                'availability'     => ['label' => 'Availability', 'type' => 'select', 'options' => ['In Stock' => 'In Stock', 'On Request' => 'On Request', 'Sold' => 'Sold']],
+                'short_description'=> ['label' => 'Short Description', 'type' => 'textarea'],
+                'description'      => ['label' => 'Full Description', 'type' => 'textarea'],
+                'specifications'   => ['label' => 'Technical Specifications', 'type' => 'textarea', 'hint' => 'One item per line.'],
+                'features'         => ['label' => 'Features', 'type' => 'textarea', 'hint' => 'One item per line.'],
+                'image'            => ['label' => 'Image', 'type' => 'image'],
+                'featured'         => ['label' => 'Featured on listing', 'type' => 'checkbox', 'default' => 0],
+                'is_active'        => ['label' => 'Visible on site', 'type' => 'checkbox', 'default' => 1],
+                'sort_order'       => ['label' => 'Sort Order', 'type' => 'number'],
+            ],
+        ],
+        'used-categories' => [
+            'table'      => 'used_equipment_categories',
+            'title'      => 'Used Equipment Categories',
+            'singular'   => 'Category',
+            'title_field'=> 'name',
+            'orderby'    => 'sort_order ASC, id ASC',
+            'columns'    => ['code' => 'Code', 'name' => 'Name', 'slug' => 'Slug', 'is_active' => 'Status'],
+            'fields'     => [
+                'name'        => ['label' => 'Category Name', 'type' => 'text', 'required' => true],
+                'code'        => ['label' => 'Short Code', 'type' => 'text', 'hint' => 'e.g. AVN, ECT, MFL', 'required' => true],
+                'slug'        => ['label' => 'Slug', 'type' => 'text', 'hint' => 'Leave blank to auto-generate from the name.'],
+                'description' => ['label' => 'Description', 'type' => 'textarea'],
+                'image'       => ['label' => 'Image', 'type' => 'image'],
+                'is_active'   => ['label' => 'Visible on site', 'type' => 'checkbox', 'default' => 1],
+                'sort_order'  => ['label' => 'Sort Order', 'type' => 'number'],
+            ],
+        ],
     ];
 }
 
@@ -310,7 +375,9 @@ function handle_entity_save(string $key, array $spec): void {
             $slug = $base . '-' . $i;
         }
         $idx = array_search('slug', $cols, true);
-        $vals[$idx] = $slug;
+        if ($idx !== false) {
+            $vals[$idx] = $slug;
+        }
     }
 
     if ($id) {
@@ -357,6 +424,7 @@ function handle_entity_action(string $key, array $spec): void {
 function field_display_value(array $spec, string $col, $value): string {
     if ($value === null || $value === '') return '<span class="muted">—</span>';
     if ($col === 'is_active') return badge((bool)$value);
+    if ($col === 'featured') return (bool)$value ? 'Yes' : '<span class="muted">—</span>';
     if ($col === 'image') return '<img class="thumb" src="' . BASE_URL . '/' . e($value) . '" alt="">';
     $def = $spec['fields'][$col] ?? null;
     if ($def && $def['type'] === 'select' && !empty($def['options'])) {
@@ -371,10 +439,12 @@ function field_display_value(array $spec, string $col, $value): string {
 const ADMIN_NAV = [
     'dashboard'  => ['Dashboard', '/admin/index.php'],
     'products'   => ['Products', '/admin/entity.php?t=products'],
-    'categories' => ['Categories', '/admin/entity.php?t=categories'],
+    'categories' => ['Products Categories', '/admin/entity.php?t=categories'],
     'industries' => ['Industries', '/admin/entity.php?t=industries'],
     'projects'   => ['Projects', '/admin/entity.php?t=projects'],
     'timeline'   => ['Workflow', '/admin/entity.php?t=timeline'],
+    'used-items'       => ['Used Equipment', '/admin/entity.php?t=used-items'],
+    'used-categories'  => ['Used Categories', '/admin/entity.php?t=used-categories'],
     'enquiries'  => ['Enquiries', '/admin/enquiries.php'],
     'settings'   => ['Settings', '/admin/settings.php'],
 ];
@@ -389,6 +459,7 @@ function admin_header(string $title, string $active = ''): void {
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow, noarchive">
 <title><?= e($title) ?> — JAGS Admin</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>

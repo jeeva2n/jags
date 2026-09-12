@@ -4,8 +4,8 @@
             <div class="footer-grid">
                 <div class="footer-brand">
                     <a href="<?= BASE_URL ?>/" class="footer-logo">
-                        <img src="<?= BASE_URL ?>/assets/images/jags.png" alt="JAGS Technologies Logo" class="logo-img">
-                        <span class="logo-text">JAGS<span class="logo-accent">TECH</span></span>
+                        <img src="<?= BASE_URL ?>/assets/images/jags.png" alt="<?= e(getSetting('company_name', 'JAGS Technologies')) ?> Logo" class="logo-img" width="304" height="152" loading="lazy" decoding="async">
+                        <!-- <span class="logo-text">JAGS<span class="logo-accent">TECH</span></span> -->
                     </a>
                     <p class="footer-tagline">ADVANCED NDT EQUIPMENT<br>& INDUSTRIAL AUTOMATION</p>
                     <p class="footer-desc">Engineering precision inspection systems and customized industrial automation solutions.</p>
@@ -37,6 +37,7 @@
                     <h4 class="footer-heading">Company</h4>
                     <ul class="footer-links">
                         <li><a href="<?= BASE_URL ?>/pages/about.php">About</a></li>
+                        <li><a href="<?= BASE_URL ?>/used-equipment">Used Equipment</a></li>
                         <li><a href="<?= BASE_URL ?>/pages/industries.php">Industries</a></li>
                         <li><a href="<?= BASE_URL ?>/pages/solutions.php">Solutions</a></li>
                         <li><a href="<?= BASE_URL ?>/pages/projects.php">Projects</a></li>
@@ -79,10 +80,10 @@
     <div class="footer-bottom">
         <div class="container">
             <div class="footer-bottom-inner">
-                <p>&copy; <?= date('Y') ?> JAGS Technologies. All rights reserved.</p>
+                <p>&copy; <?= date('Y') ?> <?= e(getSetting('company_name', 'JAGS Technologies')) ?>. All rights reserved.</p>
                 <div class="footer-bottom-links">
-                    <a href="#">Privacy Policy</a>
-                    <a href="#">Terms of Service</a>
+                    <a href="<?= BASE_URL ?>/pages/privacy-policy.php">Privacy Policy</a>
+                    <a href="<?= BASE_URL ?>/pages/terms-of-service.php">Terms of Service</a>
                 </div>
             </div>
         </div>

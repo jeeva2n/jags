@@ -1,6 +1,7 @@
 <?php
 require_once __DIR__ . '/../includes/config.php';
 $pageTitle = 'Products';
+$metaDesc = 'Browse JAGS Technologies NDT equipment and accessories — eddy current, PAUT & TOFD, MPI, penetrant testing, probes, calibration blocks and more.';
 $ndtCategories = getCategories('ndt');
 $automationCategories = getCategories('automation');
 $selectedCat = $_GET['cat'] ?? null;
@@ -38,9 +39,9 @@ include __DIR__ . '/../includes/header.php';
             <a href="<?= BASE_URL ?>/pages/product-detail.php?slug=<?= $product['slug'] ?>" class="product-card">
                 <div class="product-card-image">
                     <?php if ($product['image']): ?>
-                    <img src="<?= BASE_URL ?>/<?= e($product['image']) ?>" alt="<?= e($product['name']) ?>">
+                    <img src="<?= BASE_URL ?>/<?= e($product['image']) ?>" alt="<?= e($product['name']) ?>" loading="lazy" decoding="async">
                     <?php else: ?>
-                    <img src="https://picsum.photos/seed/p-<?= e($product['slug']) ?>/600/400" alt="<?= e($product['name']) ?>">
+                    <img src="<?= placeholder_img() ?>" alt="<?= e($product['name']) ?>" loading="lazy" decoding="async">
                     <?php endif; ?>
                 </div>
                 <div class="product-card-body">

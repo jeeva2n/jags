@@ -1,6 +1,7 @@
 <?php
 require_once __DIR__ . '/../includes/config.php';
 $pageTitle = 'Solutions';
+$metaDesc = 'Discover JAGS Technologies application-focused NDT solutions — surface, tube and weld inspection, corrosion mapping, automated sorting and production-line testing.';
 include __DIR__ . '/../includes/header.php';
 ?>
 

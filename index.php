@@ -98,7 +98,7 @@ $industries = getIndustries();
                     customers achieve accurate, safe and reliable inspection results.
                 </p>
     
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                <div class="grid-two" style="gap: 20px;">
 
                     <div class="value-card" style="padding: 28px;">
                         <div class="value-number" style="font-size: 1.5rem; margin-bottom: 8px;">01</div>
@@ -156,19 +156,23 @@ $industries = getIndustries();
 
         <div class="tech-cards-grid">
             <?php
+            $techCardImgs = [];
+            foreach (array_merge($ndtCategories, $automationCategories) as $c) {
+                $techCardImgs[$c['slug']] = $c['image'];
+            }
             $techCards = [
-                ['eddy-current', 'Eddy Current', 'Advanced electromagnetic inspection using conventional ECT, multi-channel ECT, eddy current array, tube inspection, sorting and crack detection.', 'ECT', 'https://picsum.photos/seed/ect/600/400'],
-                ['paut-tofd', 'PAUT & TOFD', 'Advanced ultrasonic inspection with portable PAUT instruments, TOFD systems, manual and encoded scanners.', 'UT', 'https://picsum.photos/seed/ut/600/400'],
-                ['mpi', 'MPI', 'Professional magnetic particle inspection equipment for surface and near-surface defect detection.', 'MPI', 'https://picsum.photos/seed/mpi/600/400'],
-                ['pt-systems', 'PT Systems', 'Professional penetrant testing systems for surface-breaking defect detection.', 'PT', 'https://picsum.photos/seed/pt/600/400'],
-                ['probes-accessories', 'Probes & Accessories', 'NDT probes, wedges, encoders, calibration blocks and accessories.', 'ACC', 'https://picsum.photos/seed/acc/600/400'],
+                ['eddy-current', 'Eddy Current', 'Advanced electromagnetic inspection using conventional ECT, multi-channel ECT, eddy current array, tube inspection, sorting and crack detection.', 'ECT', $techCardImgs['eddy-current'] ?? ''],
+                ['paut-tofd', 'PAUT & TOFD', 'Advanced ultrasonic inspection with portable PAUT instruments, TOFD systems, manual and encoded scanners.', 'UT', $techCardImgs['paut-tofd'] ?? ''],
+                ['mpi', 'MPI', 'Professional magnetic particle inspection equipment for surface and near-surface defect detection.', 'MPI', $techCardImgs['mpi'] ?? ''],
+                ['pt-systems', 'PT Systems', 'Professional penetrant testing systems for surface-breaking defect detection.', 'PT', $techCardImgs['pt-systems'] ?? ''],
+                ['probes-accessories', 'Probes & Accessories', 'NDT probes, wedges, encoders, calibration blocks and accessories.', 'ACC', $techCardImgs['probes-accessories'] ?? ''],
             ];
             foreach ($techCards as $tc):
             ?>
                 <a href="<?= BASE_URL ?>/pages/products.php?cat=<?= $tc[0] ?>" class="tech-card tilt-card">
                     <div class="tech-card-scan"></div>
                     <div class="tech-card-image">
-                        <img src="<?= $tc[4] ?>" alt="<?= $tc[1] ?>" style="width: 100%; height: 100%; object-fit: cover;">
+                        <img src="<?= image_uri($tc[4], placeholder_img()) ?>" alt="<?= $tc[1] ?>" loading="lazy" decoding="async" style="width: 100%; height: 100%; object-fit: cover;">
                     </div>
                     <div class="tech-card-body">
                         <h3 class="tech-card-title"><?= $tc[1] ?></h3>
@@ -186,7 +190,7 @@ $industries = getIndustries();
     <div class="container">
         <div class="split-section">
             <div class="split-image img-reveal has-scan">
-                <img src="https://picsum.photos/seed/eddy-current/800/600" alt="Eddy Current Inspection" style="width: 100%; height: 100%; object-fit: cover; border-radius: 12px;">
+                <img src="<?= placeholder_img() ?>" alt="Eddy Current Inspection" loading="lazy" decoding="async" style="width: 100%; height: 100%; object-fit: cover; border-radius: 12px;">
                 <div class="scan-line"></div>
             </div>
 
@@ -237,7 +241,7 @@ $industries = getIndustries();
             </div>
 
             <div class="split-image img-reveal has-scan" style="direction: ltr;">
-                <img src="https://picsum.photos/seed/paut/800/600" alt="PAUT TOFD Inspection" style="width: 100%; height: 100%; object-fit: cover; border-radius: 12px;">
+                <img src="<?= placeholder_img() ?>" alt="PAUT TOFD Inspection" loading="lazy" decoding="async" style="width: 100%; height: 100%; object-fit: cover; border-radius: 12px;">
                 <div class="scan-line"></div>
             </div>
         </div>
@@ -247,10 +251,10 @@ $industries = getIndustries();
 <!-- ====== MPI + PT ====== -->
 <section class="section">
     <div class="container">
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px; min-height: 500px;">
+        <div class="grid-two" style="gap: 24px;">
             <div class="tech-card" style="display: flex; flex-direction: column;">
                 <div class="tech-card-image" style="aspect-ratio: 16/8;">
-                    <img src="https://picsum.photos/seed/mpi-card/600/300" alt="Magnetic Particle Inspection" style="width: 100%; height: 100%; object-fit: cover;">
+                    <img src="<?= placeholder_img() ?>" alt="Magnetic Particle Inspection" loading="lazy" decoding="async" style="width: 100%; height: 100%; object-fit: cover;">
                 </div>
                 <div class="tech-card-body" style="flex: 1; display: flex; flex-direction: column; justify-content: center;">
                     <span class="split-number">MPI</span>
@@ -262,7 +266,7 @@ $industries = getIndustries();
 
             <div class="tech-card" style="display: flex; flex-direction: column;">
                 <div class="tech-card-image" style="aspect-ratio: 16/8;">
-                    <img src="https://picsum.photos/seed/pt-card/600/300" alt="Penetrant Testing" style="width: 100%; height: 100%; object-fit: cover;">
+                    <img src="<?= placeholder_img() ?>" alt="Penetrant Testing" loading="lazy" decoding="async" style="width: 100%; height: 100%; object-fit: cover;">
                 </div>
                 <div class="tech-card-body" style="flex: 1; display: flex; flex-direction: column; justify-content: center;">
                     <span class="split-number">PT SYSTEMS</span>
@@ -285,10 +289,10 @@ $industries = getIndustries();
             <h2 class="section-title" style="color: white;">ADVANCED NDT<br>SOLUTIONS</h2>
         </div>
 
-        <div class="tech-cards-grid" style="grid-template-columns: repeat(4, 1fr); gap: 20px; padding-bottom: 80px;">
+        <div class="tech-cards-grid grid-four" style="gap: 20px; padding-bottom: 80px;">
             <div class="tech-card" style="background: var(--color-bg-dark-alt); border-color: rgba(255,255,255,0.08);">
                 <div class="tech-card-image">
-                    <img src="https://picsum.photos/seed/scan-ect/400/300" alt="Eddy Current" style="width: 100%; height: 100%; object-fit: cover;">
+                    <img src="<?= placeholder_img() ?>" alt="Eddy Current" loading="lazy" decoding="async" style="width: 100%; height: 100%; object-fit: cover;">
                 </div>
                 <div class="tech-card-body">
                     <h3 class="tech-card-title" style="color: white;">Eddy Current</h3>
@@ -297,7 +301,7 @@ $industries = getIndustries();
             </div>
             <div class="tech-card" style="background: var(--color-bg-dark-alt); border-color: rgba(255,255,255,0.08);">
                 <div class="tech-card-image">
-                    <img src="https://picsum.photos/seed/scan-paut/400/300" alt="PAUT & TOFD" style="width: 100%; height: 100%; object-fit: cover;">
+                    <img src="<?= placeholder_img() ?>" alt="PAUT & TOFD" loading="lazy" decoding="async" style="width: 100%; height: 100%; object-fit: cover;">
                 </div>
                 <div class="tech-card-body">
                     <h3 class="tech-card-title" style="color: white;">PAUT & TOFD</h3>
@@ -306,7 +310,7 @@ $industries = getIndustries();
             </div>
             <div class="tech-card" style="background: var(--color-bg-dark-alt); border-color: rgba(255,255,255,0.08);">
                 <div class="tech-card-image">
-                    <img src="https://picsum.photos/seed/scan-auto/400/300" alt="Automated Inspection" style="width: 100%; height: 100%; object-fit: cover;">
+                    <img src="<?= placeholder_img() ?>" alt="Automated Inspection" loading="lazy" decoding="async" style="width: 100%; height: 100%; object-fit: cover;">
                 </div>
                 <div class="tech-card-body">
                     <h3 class="tech-card-title" style="color: white;">Automated Inspection</h3>
@@ -315,7 +319,7 @@ $industries = getIndustries();
             </div>
             <div class="tech-card" style="background: var(--color-bg-dark-alt); border-color: rgba(255,255,255,0.08);">
                 <div class="tech-card-image">
-                    <img src="https://picsum.photos/seed/scan-robo/400/300" alt="Robotic Inspection" style="width: 100%; height: 100%; object-fit: cover;">
+                    <img src="<?= placeholder_img() ?>" alt="Robotic Inspection" loading="lazy" decoding="async" style="width: 100%; height: 100%; object-fit: cover;">
                 </div>
                 <div class="tech-card-body">
                     <h3 class="tech-card-title" style="color: white;">Robotic Inspection</h3>
@@ -362,7 +366,7 @@ $industries = getIndustries();
             </div>
         </div>
 
-        <div class="tech-cards-grid" style="grid-template-columns: repeat(3, 1fr);">
+        <div class="tech-cards-grid grid-three">
             <?php
             $autoCards = [
                 ['feeding-handling', 'Feeding & Handling', 'Conveyors, vibratory bowl feeders, step feeders, loading/unloading, part orientation.'],
@@ -407,7 +411,7 @@ $industries = getIndustries();
                     <div class="timeline-node-inner">
                         <div class="timeline-node-step">STEP <?= str_pad($stage['step_number'], 2, '0', STR_PAD_LEFT) ?></div>
                         <div class="timeline-node-image">
-                            <img src="https://picsum.photos/seed/timeline-<?= $i + 1 ?>/400/300" alt="<?= e($stage['title']) ?>" style="width: 100%; height: 100%; object-fit: cover;">
+                            <img src="<?= image_uri($stage['image'], placeholder_img()) ?>" alt="<?= e($stage['title']) ?>" loading="lazy" decoding="async" style="width: 100%; height: 100%; object-fit: cover;">
                             <div class="timeline-node-scan"></div>
                         </div>
                         <div class="timeline-node-content">
@@ -455,7 +459,7 @@ $industries = getIndustries();
             ?>
                 <div class="industry-card" data-cursor="EXPLORE">
                     <div class="industry-card-placeholder" style="padding: 0;">
-                        <img src="https://picsum.photos/seed/industry-<?= $indIdx + 1 ?>/400/300" alt="<?= e($ind['name']) ?>" style="width: 100%; height: 100%; object-fit: cover; position: absolute; inset: 0;">
+                        <img src="<?= placeholder_img() ?>" alt="<?= e($ind['name']) ?>" loading="lazy" decoding="async" style="width: 100%; height: 100%; object-fit: cover; position: absolute; inset: 0;">
                     </div>
                     <div class="industry-card-overlay">
                         <h3 class="industry-card-title"><?= e($ind['name']) ?></h3>
@@ -477,7 +481,7 @@ $industries = getIndustries();
             <h2 class="section-title">APPLICATION-FOCUSED<br>SOLUTIONS</h2>
         </div>
 
-        <div class="services-grid" style="grid-template-columns: repeat(3, 1fr);">
+        <div class="services-grid grid-three">
             <?php
             $solutions = [
                 ['Surface Inspection', 'Surface crack and defect detection using MPI, PT and eddy current testing.'],
@@ -577,7 +581,7 @@ $industries = getIndustries();
             </div>
 
             <div class="split-image img-reveal has-scan">
-                <img src="https://picsum.photos/seed/why-jags/800/600" alt="Why JAGS Technologies" style="width: 100%; height: 100%; object-fit: cover; border-radius: 12px;">
+                <img src="<?= placeholder_img() ?>" alt="Why JAGS Technologies" loading="lazy" decoding="async" style="width: 100%; height: 100%; object-fit: cover; border-radius: 12px;">
                 <div class="scan-line"></div>
             </div>
         </div>
@@ -597,16 +601,16 @@ $industries = getIndustries();
         <div class="project-grid">
             <?php
             $projectPlaceholders = [
-                ['Automotive', 'Automated Component Inspection System', 'Complete automated inspection cell with feeding, eddy current testing and sorting for automotive components.', 'https://picsum.photos/seed/project-auto/600/400'],
-                ['Oil & Gas', 'Tube Inspection Solution', 'Multi-frequency eddy current tube inspection system for heat exchanger tubes in refinery.', 'https://picsum.photos/seed/project-oil/600/400'],
-                ['Aerospace', 'Weld Inspection System', 'Phased array ultrasonic inspection system for aerospace structural welds.', 'https://picsum.photos/seed/project-aero/600/400'],
-                ['Power Plants', 'Corrosion Mapping Solution', 'Automated corrosion mapping system for pressure vessel and piping inspection.', 'https://picsum.photos/seed/project-power/600/400'],
+                ['Automotive', 'Automated Component Inspection System', 'Complete automated inspection cell with feeding, eddy current testing and sorting for automotive components.', placeholder_img()],
+                ['Oil & Gas', 'Tube Inspection Solution', 'Multi-frequency eddy current tube inspection system for heat exchanger tubes in refinery.', placeholder_img()],
+                ['Aerospace', 'Weld Inspection System', 'Phased array ultrasonic inspection system for aerospace structural welds.', placeholder_img()],
+                ['Power Plants', 'Corrosion Mapping Solution', 'Automated corrosion mapping system for pressure vessel and piping inspection.', placeholder_img()],
             ];
             foreach ($projectPlaceholders as $proj):
             ?>
                 <div class="project-card">
                     <div class="project-card-image">
-                        <img src="<?= $proj[3] ?>" alt="<?= $proj[1] ?>" style="width: 100%; height: 100%; object-fit: cover;">
+                        <img src="<?= $proj[3] ?>" alt="<?= $proj[1] ?>" loading="lazy" decoding="async" style="width: 100%; height: 100%; object-fit: cover;">
                     </div>
                     <div class="project-card-body">
                         <span class="project-card-tag"><?= $proj[0] ?></span>
@@ -687,6 +691,10 @@ $industries = getIndustries();
                     <div class="form-group">
                         <label for="q-message">Requirement</label>
                         <textarea id="q-message" name="message" class="form-control" rows="5" placeholder="Describe your inspection requirement..."></textarea>
+                    </div>
+                    <div style="position: absolute; left: -9999px; top: auto; width: 1px; height: 1px; overflow: hidden;" aria-hidden="true">
+                        <label for="q-website">Company Website</label>
+                        <input type="text" id="q-website" name="company_website" tabindex="-1" autocomplete="off">
                     </div>
                     <div class="form-group">
                         <label for="q-file">Upload Specification / Drawing</label>

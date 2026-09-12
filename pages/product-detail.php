@@ -3,10 +3,23 @@ require_once __DIR__ . '/../includes/config.php';
 $slug = $_GET['slug'] ?? '';
 $product = getProduct($slug);
 if (!$product) {
-    header('Location: ' . BASE_URL . '/pages/products.php');
+    http_response_code(404);
+    include __DIR__ . '/../404.php';
     exit;
 }
 $pageTitle = $product['name'];
+$metaDesc = seo_product_meta($product);
+$ogType  = 'product';
+$ogImage = $product['image'] ? BASE_URL . '/' . ltrim($product['image'], '/') : default_og_image();
+$jsonLd  = [
+    '@context'      => 'https://schema.org',
+    '@type'         => 'Product',
+    'name'          => $product['name'],
+    'description'   => ($product['short_description'] ?? '') !== '' ? $product['short_description'] : ($product['description'] ?? ''),
+    'image'         => $ogImage,
+    'category'      => $product['category_name'] ?? '',
+    'url'           => canonical_url(),
+];
 include __DIR__ . '/../includes/header.php';
 ?>
 
@@ -27,7 +40,7 @@ include __DIR__ . '/../includes/header.php';
                 </div>
                 <?php else: ?>
                 <div class="split-image img-reveal">
-                    <img src="https://picsum.photos/seed/p-<?= e($product['slug']) ?>/800/600" alt="<?= e($product['name']) ?>">
+                    <img src="<?= placeholder_img() ?>" alt="<?= e($product['name']) ?>">
                 </div>
                 <?php endif; ?>
             </div>
@@ -88,9 +101,9 @@ include __DIR__ . '/../includes/header.php';
             <a href="<?= BASE_URL ?>/pages/product-detail.php?slug=<?= $rel['slug'] ?>" class="product-card">
                 <div class="product-card-image">
                     <?php if ($rel['image']): ?>
-                    <img src="<?= BASE_URL ?>/<?= e($rel['image']) ?>" alt="<?= e($rel['name']) ?>">
+                    <img src="<?= BASE_URL ?>/<?= e($rel['image']) ?>" alt="<?= e($rel['name']) ?>" loading="lazy" decoding="async">
                     <?php else: ?>
-                    <img src="https://picsum.photos/seed/p-<?= e($rel['slug']) ?>/600/400" alt="<?= e($rel['name']) ?>">
+                    <img src="<?= placeholder_img() ?>" alt="<?= e($rel['name']) ?>" loading="lazy" decoding="async">
                     <?php endif; ?>
                 </div>
                 <div class="product-card-body">

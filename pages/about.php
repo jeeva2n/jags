@@ -1,6 +1,7 @@
 <?php
 require_once __DIR__ . '/../includes/config.php';
 $pageTitle = 'About';
+$metaDesc = 'JAGS Technologies supplies NDT equipment, inspection systems and automation, from application study through installation, training and service.';
 include __DIR__ . '/../includes/header.php';
 ?>
 
@@ -30,7 +31,7 @@ include __DIR__ . '/../includes/header.php';
                 </p>
             </div>
             <div class="split-image img-reveal has-scan">
-                <img src="https://picsum.photos/seed/about-jags/800/600" alt="About JAGS Technologies">
+                <img src="<?= BASE_URL ?>/assets/images/placeholder.png" alt="About JAGS Technologies">
                 <div class="scan-line"></div>
             </div>
         </div>

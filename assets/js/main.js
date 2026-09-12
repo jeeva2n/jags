@@ -34,18 +34,59 @@ function initMobileMenu() {
     const menu = document.getElementById('mobileMenu');
     if (!toggle || !menu) return;
 
+    const links = Array.from(menu.querySelectorAll('a'));
+    let lastFocused = null;
+
+    function openMenu() {
+        menu.hidden = false;
+        toggle.classList.add('active');
+        menu.classList.add('active');
+        document.body.classList.add('no-scroll');
+        toggle.setAttribute('aria-expanded', 'true');
+        lastFocused = document.activeElement;
+        if (links.length) links[0].focus();
+    }
+
+    function closeMenu(returnFocus) {
+        menu.classList.remove('active');
+        toggle.classList.remove('active');
+        document.body.classList.remove('no-scroll');
+        toggle.setAttribute('aria-expanded', 'false');
+        menu.hidden = true;
+        if (returnFocus !== false && lastFocused && document.contains(lastFocused)) {
+            lastFocused.focus();
+        }
+    }
+
     toggle.addEventListener('click', () => {
-        toggle.classList.toggle('active');
-        menu.classList.toggle('active');
-        document.body.classList.toggle('no-scroll');
+        if (menu.classList.contains('active')) {
+            closeMenu();
+        } else {
+            openMenu();
+        }
     });
 
-    menu.querySelectorAll('a').forEach(link => {
-        link.addEventListener('click', () => {
-            toggle.classList.remove('active');
-            menu.classList.remove('active');
-            document.body.classList.remove('no-scroll');
-        });
+    links.forEach(link => {
+        link.addEventListener('click', () => closeMenu());
+    });
+
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && menu.classList.contains('active')) {
+            closeMenu();
+            return;
+        }
+        if (e.key === 'Tab' && menu.classList.contains('active')) {
+            const focusables = [toggle, ...links];
+            const first = focusables[0];
+            const last = focusables[focusables.length - 1];
+            if (e.shiftKey && document.activeElement === first) {
+                e.preventDefault();
+                last.focus();
+            } else if (!e.shiftKey && document.activeElement === last) {
+                e.preventDefault();
+                first.focus();
+            }
+        }
     });
 }
 
@@ -301,7 +342,7 @@ function initSectionAnimations() {
         }
     });
 
-    gsap.utils.toArray('.tech-card, .product-card, .industry-card, .service-item, .value-card').forEach((card, i) => {
+    gsap.utils.toArray('.tech-card, .product-card, .industry-card, .service-item, .value-card, .ue-card, .ue-item').forEach((card, i) => {
         gsap.from(card, {
             opacity: 0,
             y: 40,
