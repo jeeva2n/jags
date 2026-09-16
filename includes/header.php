@@ -75,6 +75,38 @@ $htmlTitle  = $pageTitle !== '' ? $pageTitle . ' | ' . $siteName : $siteName . '
                 <li class="nav-item <?= $currentPage === 'index' ? 'active' : '' ?>">
                     <a href="<?= BASE_URL ?>/">Home</a>
                 </li>
+                <li class="nav-item has-dropdown <?= $currentPage === 'about' ? 'active' : '' ?>">
+                    <a href="<?= BASE_URL ?>/pages/about.php">About Us</a>
+                    <div class="nav-dropdown">
+                        <div class="dropdown-inner">
+                            <div class="dropdown-col">
+                                <span class="dropdown-label">About JAGS Technologies</span>
+                                <ul>
+                                    <li><a href="<?= BASE_URL ?>/pages/company-profile.php">Company Profile</a></li>
+                                    <li><a href="<?= BASE_URL ?>/pages/management.php">Management</a></li>
+                                    <li><a href="<?= BASE_URL ?>/pages/global-partners.php">Global Partners</a></li>
+                                    <li><a href="<?= BASE_URL ?>/pages/social-responsibility.php">Social Responsibility</a></li>
+                                    <li><a href="<?= BASE_URL ?>/pages/customer-experience-center.php">Customer Experience Center</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li class="nav-item <?= $currentPage === 'solutions' ? 'active' : '' ?>">
+                    <a href="<?= BASE_URL ?>/pages/solutions.php">Solutions</a>
+                </li>
+                <li class="nav-item <?= $currentPage === 'industries' ? 'active' : '' ?>">
+                    <a href="<?= BASE_URL ?>/pages/industries.php">Industries</a>
+                </li>
+                <li class="nav-item <?= $currentPage === 'resources' ? 'active' : '' ?>">
+                    <a href="<?= BASE_URL ?>/pages/resources.php">Resources</a>
+                </li>
+                <li class="nav-item <?= $currentPage === 'contact' ? 'active' : '' ?>">
+                    <a href="<?= BASE_URL ?>/pages/contact.php">Contact Us</a>
+                </li>
+
+                <!--
+                OLD NAV ITEMS (commented out)
                 <li class="nav-item <?= $currentPage === 'about' ? 'active' : '' ?>">
                     <a href="<?= BASE_URL ?>/pages/about.php">About</a>
                 </li>
@@ -148,6 +180,7 @@ $htmlTitle  = $pageTitle !== '' ? $pageTitle . ' | ' . $siteName : $siteName . '
                 <li class="nav-item <?= $currentPage === 'projects' ? 'active' : '' ?>">
                     <a href="<?= BASE_URL ?>/pages/projects.php">Projects</a>
                 </li>
+                -->
             </ul>
         </nav>
 

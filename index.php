@@ -58,16 +58,16 @@ $industries = getIndustries();
         <div class="hero-image-wrapper">
             <div class="hero-slider" id="heroSlider">
                 <div class="hero-slide active">
-                    <img src="<?= BASE_URL ?>/assets/images/hero/maganatic%20particle.webp" alt="Magnetic Particle Inspection">
+                    <img src="<?= BASE_URL ?>/assets/images/hero/hero-ndt-mining.webp" alt="NDT Testing in Heavy Industry">
                 </div>
                 <div class="hero-slide">
-                    <img src="<?= BASE_URL ?>/assets/images/hero/ndt-test.webp" alt="NDT Testing">
+                    <img src="<?= BASE_URL ?>/assets/images/hero/hero-paut-aerospace.webp" alt="Phased Array UT Aerospace Inspection">
                 </div>
                 <div class="hero-slide">
-                    <img src="<?= BASE_URL ?>/assets/images/hero/Nondestructive-testing-equipment-768x644.webp" alt="NDT Equipment">
+                    <img src="<?= BASE_URL ?>/assets/images/hero/hero-weld-inspection.webp" alt="Ultrasonic Weld Inspection">
                 </div>
                 <div class="hero-slide">
-                    <img src="<?= BASE_URL ?>/assets/images/hero/ultrasonic-probe-steel-pipe-inspection.webp" alt="Ultrasonic Pipe Inspection">
+                    <img src="<?= BASE_URL ?>/assets/images/hero/hero-rail-automotive.webp" alt="Rail and Automotive Inspection">
                 </div>
                 <div class="hero-slider-scan" id="heroSliderScan"></div>
                 <div class="tech-overlay"></div>
@@ -136,7 +136,7 @@ $industries = getIndustries();
             </div>
 
             <div class="who-we-are-visual has-scan">
-                <img src="<?= BASE_URL ?>/assets/images/hero/who%20we%20are.webp"
+                <img src="<?= BASE_URL ?>/assets/images/hero/hero-ndt-mining.webp"
                      alt="JAGS Technologies NDT Equipment and Inspection Solutions">
                 <div class="scan-line"></div>
             </div>

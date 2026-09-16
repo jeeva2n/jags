@@ -40,6 +40,8 @@
 
     .hero-image-wrapper {
         max-width: 600px;
+        margin-top: 0;
+        aspect-ratio: 16/10;
     }
 
     .tech-cards-grid {
