@@ -1,5 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
     initHeader();
+    initNavDropdowns();
     initMobileMenu();
     initScrollReveal();
     initParallax();
@@ -8,6 +9,8 @@ document.addEventListener('DOMContentLoaded', () => {
     initHeroSlider();
     initPageTransitions();
     initFormInteractions();
+    initStatCounters();
+    initFaq();
 });
 
 function initHeader() {
@@ -27,6 +30,45 @@ function initHeader() {
 
         lastScroll = currentScroll;
     }, { passive: true });
+}
+
+function initNavDropdowns() {
+    const items = document.querySelectorAll('.nav-item.has-dropdown');
+    if (!items.length) return;
+
+    items.forEach(item => {
+        const link = item.querySelector(':scope > a');
+        if (!link) return;
+
+        if (link.dataset.hasOwnProperty('noToggle')) return;
+
+        link.addEventListener('click', (e) => {
+            const alreadyOpen = item.classList.contains('open');
+            closeAllDropdowns();
+            if (!alreadyOpen) {
+                e.preventDefault();
+                item.classList.add('open');
+            }
+        });
+
+        item.addEventListener('mouseenter', () => closeAllDropdowns(item));
+    });
+
+    document.addEventListener('click', (e) => {
+        if (!e.target.closest('.nav-item.has-dropdown')) {
+            closeAllDropdowns();
+        }
+    });
+
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') closeAllDropdowns();
+    });
+
+    function closeAllDropdowns(except) {
+        items.forEach(it => {
+            if (it !== except) it.classList.remove('open');
+        });
+    }
 }
 
 function initMobileMenu() {
@@ -239,6 +281,72 @@ function initFormInteractions() {
         input.addEventListener('focus', () => group.classList.add('focused'));
         input.addEventListener('blur', () => {
             if (!input.value) group.classList.remove('focused');
+        });
+    });
+}
+
+function initStatCounters() {
+    const numbers = document.querySelectorAll('.stat-number[data-count]');
+    if (!numbers.length) return;
+
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    function animate(el) {
+        const target = parseFloat(el.dataset.count) || 0;
+        const decimals = (String(el.dataset.count).split('.')[1] || '').length;
+        const duration = 1600;
+        const start = performance.now();
+
+        function tick(now) {
+            const progress = Math.min((now - start) / duration, 1);
+            const eased = 1 - Math.pow(1 - progress, 3);
+            el.textContent = (target * eased).toFixed(decimals);
+            if (progress < 1) {
+                requestAnimationFrame(tick);
+            } else {
+                el.textContent = target.toFixed(decimals);
+            }
+        }
+        requestAnimationFrame(tick);
+    }
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                animate(entry.target);
+                observer.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.4 });
+
+    numbers.forEach(el => observer.observe(el));
+}
+
+function initFaq() {
+    const items = document.querySelectorAll('.faq-item');
+    if (!items.length) return;
+
+    function closeItem(item) {
+        item.classList.remove('open');
+        const btn = item.querySelector('.faq-question');
+        const answer = item.querySelector('.faq-answer');
+        if (btn) btn.setAttribute('aria-expanded', 'false');
+        if (answer) answer.style.maxHeight = null;
+    }
+
+    items.forEach(item => {
+        const btn = item.querySelector('.faq-question');
+        const answer = item.querySelector('.faq-answer');
+        if (!btn || !answer) return;
+
+        btn.addEventListener('click', () => {
+            const isOpen = item.classList.contains('open');
+            items.forEach(closeItem);
+            if (!isOpen) {
+                item.classList.add('open');
+                btn.setAttribute('aria-expanded', 'true');
+                answer.style.maxHeight = answer.scrollHeight + 'px';
+            }
         });
     });
 }

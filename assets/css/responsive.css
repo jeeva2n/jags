@@ -106,6 +106,54 @@
         grid-template-columns: 1fr;
         gap: 48px;
     }
+
+    .feature-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .stat-strip {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .pillar-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .process-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .partner-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .consult-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .capability-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .chip-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .gallery-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .page-hero {
+        padding: 180px 0 100px;
+    }
+
+    .image-band {
+        min-height: 480px;
+    }
+
+    .quote-block {
+        padding: 48px 40px;
+    }
 }
 
 /* Mobile */
@@ -296,6 +344,83 @@
 
     .timeline-wrapper::-webkit-scrollbar {
         display: none;
+    }
+
+    .page-hero {
+        padding: 140px 0 76px;
+    }
+
+    .page-hero .page-header-title {
+        font-size: var(--fs-3xl);
+    }
+
+    .trust-strip {
+        gap: 12px 24px;
+        padding: 22px 0;
+    }
+
+    .feature-grid,
+    .partner-grid,
+    .pillar-grid,
+    .stat-strip {
+        grid-template-columns: 1fr;
+    }
+
+    .consult-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .process-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .chip-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .gallery-grid {
+        grid-template-columns: 1fr;
+        grid-auto-rows: 240px;
+    }
+
+    .gallery-item.span-2 {
+        grid-column: span 1;
+    }
+
+    .gallery-item.span-row-2 {
+        grid-row: span 1;
+    }
+
+    .check-list {
+        grid-template-columns: 1fr;
+    }
+
+    .quote-block {
+        padding: 40px 26px;
+    }
+
+    .quote-text {
+        font-size: var(--fs-lg);
+    }
+
+    .image-band {
+        min-height: 420px;
+    }
+
+    .image-band-inner {
+        padding: 72px 0;
+    }
+
+    .image-band-stat {
+        gap: 28px;
+    }
+
+    .faq-question {
+        font-size: var(--fs-base);
+    }
+
+    .capability-panel {
+        padding: 34px 26px;
     }
 }
 

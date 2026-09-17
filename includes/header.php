@@ -92,8 +92,22 @@ $htmlTitle  = $pageTitle !== '' ? $pageTitle . ' | ' . $siteName : $siteName . '
                         </div>
                     </div>
                 </li>
-                <li class="nav-item <?= $currentPage === 'solutions' ? 'active' : '' ?>">
-                    <a href="<?= BASE_URL ?>/pages/solutions.php">Solutions</a>
+                <li class="nav-item has-dropdown <?= in_array($currentPage, ['products', 'product-detail', 'solutions']) ? 'active' : '' ?>">
+                    <a href="<?= BASE_URL ?>/pages/products.php">Product Range</a>
+                    <div class="nav-dropdown">
+                        <div class="dropdown-inner">
+                            <div class="dropdown-col">
+                                <span class="dropdown-label">Our Product Range</span>
+                                <ul>
+                                    <li><a href="<?= BASE_URL ?>/pages/products.php?cat=paut-tofd">PAUT & TOFD</a></li>
+                                    <li><a href="<?= BASE_URL ?>/pages/products.php?cat=eddy-current">Eddy Current</a></li>
+                                    <li><a href="<?= BASE_URL ?>/pages/products.php?cat=mfl">MFL</a></li>
+                                    <li><a href="<?= BASE_URL ?>/pages/products.php?cat=scanners-crawlers">Scanners & Crawlers</a></li>
+                                    <li><a href="<?= BASE_URL ?>/pages/products.php?cat=probes-sensors">Probes & Sensors</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
                 </li>
                 <li class="nav-item <?= $currentPage === 'industries' ? 'active' : '' ?>">
                     <a href="<?= BASE_URL ?>/pages/industries.php">Industries</a>
@@ -198,7 +212,17 @@ $htmlTitle  = $pageTitle !== '' ? $pageTitle . ' | ' . $siteName : $siteName . '
     <div class="mobile-menu-inner">
         <ul class="mobile-nav-list">
             <li><a href="<?= BASE_URL ?>/">Home</a></li>
-            <li><a href="<?= BASE_URL ?>/pages/about.php">About</a></li>
+            <li class="mobile-nav-group">
+                <span class="mobile-nav-label">About Us</span>
+                <ul>
+                    <li><a href="<?= BASE_URL ?>/pages/about.php">Overview</a></li>
+                    <li><a href="<?= BASE_URL ?>/pages/company-profile.php">Company Profile</a></li>
+                    <li><a href="<?= BASE_URL ?>/pages/management.php">Management</a></li>
+                    <li><a href="<?= BASE_URL ?>/pages/global-partners.php">Global Partners</a></li>
+                    <li><a href="<?= BASE_URL ?>/pages/social-responsibility.php">Social Responsibility</a></li>
+                    <li><a href="<?= BASE_URL ?>/pages/customer-experience-center.php">Customer Experience Center</a></li>
+                </ul>
+            </li>
             <li class="mobile-nav-group">
                 <span class="mobile-nav-label">Used Equipment</span>
                 <ul>
@@ -227,8 +251,18 @@ $htmlTitle  = $pageTitle !== '' ? $pageTitle . ' | ' . $siteName : $siteName . '
                     <li><a href="<?= BASE_URL ?>/pages/automation.php#robotics">Robotics & Vision</a></li>
                 </ul>
             </li>
+            <li class="mobile-nav-group">
+                <span class="mobile-nav-label">Product Range</span>
+                <ul>
+                    <li><a href="<?= BASE_URL ?>/pages/products.php">All Products</a></li>
+                    <li><a href="<?= BASE_URL ?>/pages/products.php?cat=paut-tofd">PAUT & TOFD</a></li>
+                    <li><a href="<?= BASE_URL ?>/pages/products.php?cat=eddy-current">Eddy Current</a></li>
+                    <li><a href="<?= BASE_URL ?>/pages/products.php?cat=mfl">MFL</a></li>
+                    <li><a href="<?= BASE_URL ?>/pages/products.php?cat=scanners-crawlers">Scanners & Crawlers</a></li>
+                    <li><a href="<?= BASE_URL ?>/pages/products.php?cat=probes-sensors">Probes & Sensors</a></li>
+                </ul>
+            </li>
             <li><a href="<?= BASE_URL ?>/pages/industries.php">Industries</a></li>
-            <li><a href="<?= BASE_URL ?>/pages/solutions.php">Solutions</a></li>
             <li><a href="<?= BASE_URL ?>/pages/projects.php">Projects</a></li>
             <li><a href="<?= BASE_URL ?>/pages/contact.php" class="mobile-cta">GET A QUOTE</a></li>
         </ul>

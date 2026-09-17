@@ -37,6 +37,11 @@
                     <h4 class="footer-heading">Company</h4>
                     <ul class="footer-links">
                         <li><a href="<?= BASE_URL ?>/pages/about.php">About</a></li>
+                        <li><a href="<?= BASE_URL ?>/pages/company-profile.php">Company Profile</a></li>
+                        <li><a href="<?= BASE_URL ?>/pages/management.php">Management</a></li>
+                        <li><a href="<?= BASE_URL ?>/pages/global-partners.php">Global Partners</a></li>
+                        <li><a href="<?= BASE_URL ?>/pages/social-responsibility.php">Social Responsibility</a></li>
+                        <li><a href="<?= BASE_URL ?>/pages/customer-experience-center.php">Customer Experience Center</a></li>
                         <li><a href="<?= BASE_URL ?>/used-equipment">Used Equipment</a></li>
                         <li><a href="<?= BASE_URL ?>/pages/industries.php">Industries</a></li>
                         <li><a href="<?= BASE_URL ?>/pages/solutions.php">Solutions</a></li>

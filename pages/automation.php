@@ -24,7 +24,7 @@ include __DIR__ . '/../includes/header.php';
         <div class="section-header" style="text-align: center;">
             <h2 class="section-title">AUTOMATION<br>SYSTEM</h2>
         </div>
-
+classclassclassclassclassclassclassclassclassclassclassclassclassclassclassclassclassclassclassclassclassclassclass
         <div class="auto-flow" style="margin-bottom: 60px;">
             <div class="auto-flow-node active"><div class="auto-flow-label">FEEDING</div></div>
             <span class="auto-flow-arrow">&rarr;</span>
